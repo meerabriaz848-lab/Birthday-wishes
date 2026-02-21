@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Experience</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background:#0f2027;
+color:white;
+}
+
+/* Pages */
+.page{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+transition:1s ease;
+}
+
+/* Page 1 */
+#page1{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+z-index:2;
+}
+
+.portal{
+width:200px;
+height:200px;
+border-radius:50%;
+border:4px solid #00f2fe;
+box-shadow:0 0 30px #00f2fe, inset 0 0 40px #00f2fe;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+transition:.5s;
+}
+
+.portal:hover{
+transform:scale(1.1);
+}
+
+/* Page 2 */
+#page2{
+background:linear-gradient(135deg,#ff512f,#dd2476);
+transform:translateX(100%);
+}
+
+#photo{
+width:200px;
+height:200px;
+border-radius:50%;
+object-fit:cover;
+box-shadow:0 20px 50px rgba(0,0,0,0.6);
+margin-bottom:20px;
+transform:scale(0);
+transition:1s;
+}
+
+#message{
+font-size:28px;
+opacity:0;
+transition:1s;
+font-weight:bold;
+}
+
+/* Confetti */
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+/* Mobile */
+@media(max-width:480px){
+.portal{width:150px;height:150px;}
+#photo{width:160px;height:160px;}
+#message{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+<div class="portal" onclick="goToPage2()">
+Tap To Enter ✨
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+<img src="shafay bhi.jpeg" id="photo">
+<div id="message">🎉 Happy Birthday Shafay bhi  👑 🎉
+    <br>
+    <br>
+    
+</div>
+
+<p>
+    Happy Birthday, bro! You’re officially older…  😜 Don’t worry,  Enjoy your special day.
+    <center>
+        Not my brother by blood, but my brother by heart.<br>
+    
+      May this year bring you everything your heart desires.
+        Wishing you a day filled with love, laughter, and everything that makes you smile.<br>
+      May this year bring you happiness and  success.
+        May your day be filled with happiness, success, and endless joy!  
+        Keep shining and achieving your dreams. 🚀<br>
+        </center>
+        <center>
+Ameen sum ameen 
+
+        </center>
+        
+        
+    </p>
+
+<p></p>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+
+function goToPage2(){
+page1.style.transform="translateX(-100%)";
+page2.style.transform="translateX(0)";
+startCelebration();
+}
+
+/* Confetti */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+function createConfetti(){
+for(let i=0;i<200;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height - canvas.height,
+size:Math.random()*6+3,
+speed:Math.random()*3+2,
+color:`hsl(${Math.random()*360},100%,50%)`
+});
+}
+}
+
+function drawConfetti(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+ctx.fillStyle=p.color;
+ctx.fillRect(p.x,p.y,p.size,p.size);
+p.y+=p.speed;
+if(p.y>canvas.height){
+p.y=-10;
+}
+});
+requestAnimationFrame(drawConfetti);
+}
+
+function startCelebration(){
+createConfetti();
+drawConfetti();
+
+setTimeout(()=>{
+document.getElementById("photo").style.transform="scale(1)";
+document.getElementById("message").style.opacity="1";
+},500);
+}
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
